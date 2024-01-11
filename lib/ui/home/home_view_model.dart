@@ -11,26 +11,31 @@ class HomeViewModel extends _$HomeViewModel {
     return const HomeState();
   }
 
-  void setSendMessage(String message) {
-    state = state.copyWith(send: message);
+  void setType(String type) {
+    state = state.copyWith(type: type);
   }
 
-  bool isGeneratable() => state.send != '';
+  void setRole(String role) {
+    state = state.copyWith(role: role);
+  }
+
+  bool canGenerate() => (state.type != '') && (state.role != '');
 
   Future<void> generateName() async {
-    const receiveMessage = '名前の候補を以下に示します。\n'
-      '------------------------------------------\n\n';
     state = state.copyWith(
-      receive: receiveMessage,
+      response: '',
       isLoading: true,
     );
 
     final repository = ref.read(generatorRepositoryProvider);
-    final stream = repository.generateName(state.send);
-    state = state.copyWith(send: '');
+    final stream = repository.generateName(
+      type: state.type,
+      role: state.role,
+    );
+    state = state.copyWith(role: '');
 
     await for(var response in stream) {
-      state = state.copyWith(receive: state.receive + response);
+      state = state.copyWith(response: state.response + response);
     }
 
     state = state.copyWith(isLoading: false);

@@ -7,9 +7,11 @@ part 'home_state.g.dart';
 class HomeState with _$HomeState {
   const factory HomeState({
     @Default('')
-    String send,
+    String type,
     @Default('')
-    String receive,
+    String role,
+    @Default('')
+    String response,
     @Default(false)
     bool isLoading,
   }) = _HomeState;

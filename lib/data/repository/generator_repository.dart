@@ -1,3 +1,3 @@
 abstract class GeneratorRepository {
-  Stream<String> generateName(String message);
+  Stream<String> generateName({required String type, required String role});
 }

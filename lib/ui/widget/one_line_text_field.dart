@@ -11,34 +11,34 @@ class OneLineTextField extends StatelessWidget {
   // ロード中かどうか？
   final bool _isLoading;
   // 送信可能かどうか？
-  final bool _isSendable;
+  final bool _canGenerate;
   // 入力された際の動作
   final Function(String)? _onChanged;
   // 送信された際の動作
-  final Function()? _onSend;
+  final Function()? _onGenerate;
 
   /// 一行の入力フォームを生成する。
   ///
   /// [controller]に入力用のコントローラを設定する（必須）。
   /// [label]、[hint]にはフォームに表示されるラベルとヒントを設定する。
   /// [onChanged]は入力された際の動作を登録する。[value]には入力された文字列が渡される。
-  /// [onSend]はフォームの文字列が送信された際の動作を登録する。
+  /// [onGenerate]はフォームの文字列が送信された際の動作を登録する。
   const OneLineTextField({
     super.key,
     required TextEditingController controller,
     String? label,
     String? hint,
     bool isLoading = false,
-    bool isSendable = true,
+    bool canGenerate = true,
     Function(String value)? onChanged,
-    Function()? onSend,
+    Function()? onGenerate,
   }): _controller = controller,
         _label = label,
         _hint = hint,
         _isLoading = isLoading,
-        _isSendable = isSendable,
+        _canGenerate = canGenerate,
         _onChanged = onChanged,
-        _onSend = onSend;
+        _onGenerate = onGenerate;
 
   @override
   Widget build(BuildContext context) {
@@ -50,19 +50,22 @@ class OneLineTextField extends StatelessWidget {
         labelText: _label,
         hintText: _hint,
         border: const OutlineInputBorder(),
-        suffixIcon: _buildSendButton(),
+        suffixIcon: _buildGenerateButton(),
       ),
       onChanged: _onChanged,
     );
   }
 
-  Widget _buildSendButton() {
+  Widget _buildGenerateButton() {
     if(_isLoading) {
       return const CircularProgressIndicator();
     }
 
     return IconButton(
-      onPressed: _isSendable ? _onSend : null,
+      onPressed: !_canGenerate ? null : () {
+        if(_onGenerate != null) _onGenerate!();
+        _controller.clear();
+      },
       icon: const Icon(Icons.send),
     );
   }

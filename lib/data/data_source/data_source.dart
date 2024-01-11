@@ -1,3 +1,3 @@
 abstract class DataSource {
-  Stream<String> getAiChatResponse(String message);
+  Stream<String> generateName(String type, String role);
 }
