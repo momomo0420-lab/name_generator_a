@@ -42,3 +42,11 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+/lib/ui/home/home_state.freezed.dart
+/lib/ui/home/home_state.g.dart
+/lib/ui/home/home_view_model.g.dart
+/lib/app_container.g.dart
+/lib/ui/home/home_state.freezed.dart
+/.env
+/.env
+/lib/env/env.g.dart
