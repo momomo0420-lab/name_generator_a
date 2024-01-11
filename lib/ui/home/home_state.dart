@@ -10,6 +10,8 @@ class HomeState with _$HomeState {
     String send,
     @Default('')
     String receive,
+    @Default(false)
+    bool isLoading,
   }) = _HomeState;
 
   factory HomeState.fromJson(Map<String, Object?> json) => _$HomeStateFromJson(json);
